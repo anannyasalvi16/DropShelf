@@ -27,15 +27,3 @@ rules.json
 .vscode/
 .idea/
 *.swp
-
-# Local notes
-viva_notes.md
-
-# Local planning notes
-prd.md
-trd.md
-starter_prompt.md
-
-# Local demo files
-DropShelf.html
-DropShelf demo.html
