@@ -1,0 +1,2 @@
+watchdog>=6.0.0
+pytest>=9.0.0
