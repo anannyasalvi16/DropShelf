@@ -1,8 +1,8 @@
 """
-Unit tests for dropsort.mover.
+Unit tests for dropshelf.mover.
 """
 
-from dropsort.mover import safe_move
+from dropshelf.mover import safe_move
 
 
 def test_basic_move(tmp_path):

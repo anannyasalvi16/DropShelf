@@ -21,7 +21,7 @@ DropShelf watches your Downloads folder and sorts every new file into the right 
 ## Project Structure
 
 ```text
-dropsort/
+dropshelf/
 ├── __init__.py      # Package initialization and version metadata
 ├── config.py        # Configuration loading, default rules, and path resolution
 ├── history.py       # SQLite audit trail, WAL mode configuration, and undo manager

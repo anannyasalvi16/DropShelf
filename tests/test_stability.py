@@ -1,10 +1,10 @@
 """
-Unit tests for dropsort.stability.
+Unit tests for dropshelf.stability.
 """
 
 import threading
 import time
-from dropsort.stability import wait_until_stable
+from dropshelf.stability import wait_until_stable
 
 
 def test_file_written_once_is_stable(tmp_path):

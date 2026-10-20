@@ -1,10 +1,10 @@
 """
-Unit tests for dropsort.config rules loading, saving, recovery, and thread safety.
+Unit tests for dropshelf.config rules loading, saving, recovery, and thread safety.
 """
 
 import json
 import threading
-from dropsort.config import (
+from dropshelf.config import (
     APP_NAME,
     DEFAULT_DB_PATH,
     ThreadSafeRulesManager,

@@ -1,8 +1,8 @@
 """
-Unit tests for dropsort.history.
+Unit tests for dropshelf.history.
 """
 
-from dropsort.history import HistoryManager
+from dropshelf.history import HistoryManager
 
 
 def test_record_and_read_back(tmp_path):

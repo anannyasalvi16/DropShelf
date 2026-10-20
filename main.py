@@ -9,14 +9,14 @@ import sys
 import tkinter as tk
 from pathlib import Path
 
-# Add project root to sys.path so 'dropsort' package is readily importable
+# Add project root to sys.path so 'dropshelf' package is readily importable
 PROJECT_ROOT = Path(__file__).resolve().parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from dropsort.config import DEFAULT_DB_PATH, DEFAULT_RULES_PATH, ThreadSafeRulesManager
-from dropsort.history import HistoryManager
-from dropsort.ui import MainWindow
+from dropshelf.config import DEFAULT_DB_PATH, DEFAULT_RULES_PATH, ThreadSafeRulesManager
+from dropshelf.history import HistoryManager
+from dropshelf.ui import MainWindow
 
 
 def setup_logging() -> None:

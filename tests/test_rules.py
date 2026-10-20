@@ -1,10 +1,10 @@
 """
-Unit tests for dropsort.rules.
+Unit tests for dropshelf.rules.
 """
 
 import pytest
-from dropsort.config import get_default_rules
-from dropsort.rules import destination_for
+from dropshelf.config import get_default_rules
+from dropshelf.rules import destination_for
 
 
 @pytest.fixture

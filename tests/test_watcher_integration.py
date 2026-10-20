@@ -1,13 +1,13 @@
 """
-Integration tests for dropsort.watcher.
+Integration tests for dropshelf.watcher.
 """
 
 import queue
 import time
 from pathlib import Path
-from dropsort.config import ThreadSafeRulesManager, get_default_rules, save_rules
-from dropsort.history import HistoryManager
-from dropsort.watcher import FolderWatcher
+from dropshelf.config import ThreadSafeRulesManager, get_default_rules, save_rules
+from dropshelf.history import HistoryManager
+from dropshelf.watcher import FolderWatcher
 
 
 def wait_until_condition(check_fn, timeout=5.0, step=0.05):
