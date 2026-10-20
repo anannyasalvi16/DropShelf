@@ -1,5 +1,5 @@
 """
-SQLite undo history manager for DropSort / DockShelf.
+SQLite undo history manager for DropShelf.
 """
 
 from __future__ import annotations

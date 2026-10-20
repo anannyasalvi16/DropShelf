@@ -1,5 +1,5 @@
 """
-Integration tests for dropsort.watcher according to TRD Section 7.
+Integration tests for dropsort.watcher.
 """
 
 import queue
@@ -50,10 +50,10 @@ def test_watcher_pipeline_integration(tmp_path):
         time.sleep(0.3)
 
         # 1. Create a PDF -> should move to Documents/
-        pdf_file = watch_dir / "lecture.pdf"
-        pdf_file.write_text("lecture notes", encoding="utf-8")
+        pdf_file = watch_dir / "report.pdf"
+        pdf_file.write_text("quarterly report", encoding="utf-8")
 
-        assert wait_until_condition(lambda: (watch_dir / "Documents" / "lecture.pdf").exists(), timeout=4.0)
+        assert wait_until_condition(lambda: (watch_dir / "Documents" / "report.pdf").exists(), timeout=4.0)
         assert not pdf_file.exists()
 
         # 2. Temp-extension file -> must be left alone in watch_dir!
@@ -77,9 +77,9 @@ def test_watcher_pipeline_integration(tmp_path):
         assert (watch_dir / "Images" / "photo (1).png").read_text(encoding="utf-8") == "photo 2"
 
         # 4. Custom rule -> matches and moves to custom folder
-        cns_file = watch_dir / "cns_security_report.docx"
-        cns_file.write_text("security", encoding="utf-8")
-        assert wait_until_condition(lambda: (watch_dir / "College" / "CNS" / "cns_security_report.docx").exists(), timeout=4.0)
+        invoice_file = watch_dir / "client_invoice.docx"
+        invoice_file.write_text("billing details", encoding="utf-8")
+        assert wait_until_condition(lambda: (watch_dir / "Finance" / "Invoices" / "client_invoice.docx").exists(), timeout=4.0)
 
     finally:
         watcher.stop()

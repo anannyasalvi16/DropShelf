@@ -1,5 +1,5 @@
 """
-Tkinter and ttk user interface for DropSort / DockShelf.
+Tkinter and ttk user interface for DropShelf.
 """
 
 from __future__ import annotations
@@ -132,7 +132,7 @@ class RulesDialog(tk.Toplevel):
 
 class MainWindow:
     """
-    Main application window following TRD Section 4.7.
+    Main application window for the DropShelf desktop interface.
     """
 
     def __init__(

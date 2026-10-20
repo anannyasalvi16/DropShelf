@@ -1,5 +1,5 @@
 """
-File stability checker for DropSort / DockShelf.
+File stability checker for DropShelf.
 """
 
 from __future__ import annotations

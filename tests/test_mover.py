@@ -1,5 +1,5 @@
 """
-Unit tests for dropsort.mover according to TRD Section 7.
+Unit tests for dropsort.mover.
 """
 
 from dropsort.mover import safe_move

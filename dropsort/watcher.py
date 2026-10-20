@@ -1,5 +1,5 @@
 """
-Event-driven folder watcher and pipeline coordinator for DropSort / DockShelf.
+Event-driven folder watcher and pipeline coordinator for DropShelf.
 """
 
 from __future__ import annotations

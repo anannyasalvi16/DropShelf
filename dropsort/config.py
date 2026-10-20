@@ -1,5 +1,5 @@
 """
-Configuration and rules management for DropSort / DockShelf.
+Configuration and rules management for DropShelf.
 """
 
 from __future__ import annotations
@@ -30,11 +30,11 @@ def get_default_watch_folder() -> str:
 
 
 def get_default_rules() -> dict[str, Any]:
-    """Returns the default rules dictionary conforming to TRD Section 4.1."""
+    """Returns the default rules dictionary."""
     return {
         "watch_folder": get_default_watch_folder(),
         "custom_rules": [
-            {"contains": "CNS", "folder": "College/CNS"}
+            {"contains": "invoice", "folder": "Finance/Invoices"}
         ],
         "type_rules": {
             "Documents": ["pdf", "doc", "docx", "txt", "rtf"],
@@ -68,7 +68,7 @@ def _validate_rules_dict(rules: Any) -> bool:
 def load_rules(path: Path | None = None) -> dict[str, Any]:
     """
     Load rules from JSON file.
-    If the file is missing or invalid, recreate it from defaults. Never crash.
+    If the file is missing or invalid, restore defaults. Never crash.
     """
     target_path = path or DEFAULT_RULES_PATH
     if not target_path.exists():

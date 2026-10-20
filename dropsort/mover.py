@@ -1,5 +1,5 @@
 """
-Safe file moving and collision-handling module for DropSort / DockShelf.
+Safe file moving and collision-handling module for DropShelf.
 """
 
 from __future__ import annotations

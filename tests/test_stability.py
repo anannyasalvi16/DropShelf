@@ -1,5 +1,5 @@
 """
-Unit tests for dropsort.stability according to TRD Section 7.
+Unit tests for dropsort.stability.
 """
 
 import threading

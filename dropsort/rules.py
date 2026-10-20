@@ -1,5 +1,5 @@
 """
-Rule matching engine for DropSort / DockShelf.
+Rule matching engine for DropShelf.
 """
 
 from __future__ import annotations

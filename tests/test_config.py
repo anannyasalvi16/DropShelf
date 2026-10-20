@@ -73,11 +73,11 @@ def test_load_rules_restores_defaults_on_invalid_schema(tmp_path):
 def test_save_and_reload_rules(tmp_path):
     rules_file = tmp_path / "rules.json"
     rules = get_default_rules()
-    rules["custom_rules"].append({"contains": "Exam", "folder": "College/Exams"})
+    rules["custom_rules"].append({"contains": "Tax", "folder": "Finance/Tax"})
     save_rules(rules, rules_file)
 
     loaded = load_rules(rules_file)
-    assert any(r["contains"] == "Exam" for r in loaded["custom_rules"])
+    assert any(r["contains"] == "Tax" for r in loaded["custom_rules"])
 
 
 def test_thread_safe_rules_manager(tmp_path):

@@ -1,5 +1,5 @@
 """
-Unit tests for dropsort.rules according to TRD Section 7.
+Unit tests for dropsort.rules.
 """
 
 import pytest
@@ -55,11 +55,11 @@ def test_uppercase_extensions(rules):
 
 
 def test_custom_rule_beats_type_rule(rules):
-    # In default rules: {"contains": "CNS", "folder": "College/CNS"}
-    # A PDF with 'CNS' in its name should go to 'College/CNS', NOT 'Documents'
-    assert destination_for("CNS_Lab_Assignment.pdf", rules) == "College/CNS"
-    assert destination_for("cns_notes.docx", rules) == "College/CNS"
-    assert destination_for("my_cns_paper.txt", rules) == "College/CNS"
+    # In default rules: {"contains": "invoice", "folder": "Finance/Invoices"}
+    # A PDF with 'invoice' in its name should go to 'Finance/Invoices', NOT 'Documents'
+    assert destination_for("Invoice_2026_01.pdf", rules) == "Finance/Invoices"
+    assert destination_for("client_invoice.docx", rules) == "Finance/Invoices"
+    assert destination_for("my_invoice_details.txt", rules) == "Finance/Invoices"
 
 
 def test_custom_rule_order_precedence():

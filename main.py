@@ -1,5 +1,5 @@
 """
-Main entry point for DropSort / DockShelf desktop application.
+Main entry point for DropShelf desktop application.
 """
 
 from __future__ import annotations

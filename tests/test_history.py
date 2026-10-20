@@ -1,5 +1,5 @@
 """
-Unit tests for dropsort.history according to TRD Section 7.
+Unit tests for dropsort.history.
 """
 
 from dropsort.history import HistoryManager
@@ -31,8 +31,8 @@ def test_undo_restores_original_path(tmp_path):
     downloads.mkdir(parents=True)
     docs.mkdir(parents=True)
 
-    original_path = downloads / "assignment.pdf"
-    sorted_path = docs / "assignment.pdf"
+    original_path = downloads / "quarterly_report.pdf"
+    sorted_path = docs / "quarterly_report.pdf"
     sorted_path.write_text("PDF content", encoding="utf-8")
 
     move_id = history.record_move(original_path, sorted_path)
