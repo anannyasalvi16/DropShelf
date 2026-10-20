@@ -1,13 +1,20 @@
-# DropShelf — Smart Desktop Downloads Organizer
+# DropShelf: Smart Desktop Downloads Organizer
 
 An event-driven desktop utility designed to organize messy Downloads folders automatically into categorised subfolders with a live activity log and full undo support.
 
-> Built as an **Operating Systems Case Study Project for Mumbai University (TE IT)**.  
-> Unlike simulated academic demos, DropShelf uses **real OS kernel filesystem events**, **thread pools**, **file locking checks**, and **thread-safe message queues**.
+> Built as an **Operating Systems Case Study Project for Mumbai University (TE IT)**.
 
 ---
 
-## 🚀 Features
+## Demo
+
+<!-- DEMO GIF PLACEHOLDER -->
+<!-- Replace with actual demo GIF when recorded: ![DropShelf Demo](docs/demo.gif) -->
+> _[Demo GIF Placeholder: Live folder sorting, non-destructive auto-rename, and one-click Undo]_
+
+---
+
+## Features
 
 - **Live Event-Driven Watcher:** Uses OS-level file notification APIs via `watchdog` to detect new files immediately without polling.
 - **Smart Category Sorting:** Default sorting rules for Documents, Spreadsheets, Presentations, Images, Videos, Audio, Archives, Installers, and Other.
@@ -16,18 +23,20 @@ An event-driven desktop utility designed to organize messy Downloads folders aut
 - **Non-Destructive Collision Resolution:** Never overwrites files. If `report.pdf` exists, the incoming file becomes `report (1).pdf`.
 - **Skip Incomplete Downloads:** Ignores temporary partial downloads (`.crdownload`, `.part`, `.tmp`, etc.).
 - **Live Activity Log & Rollback:** SQLite-backed audit trail with one-click **Undo** to restore files to their exact original locations.
+- **Dynamic Folder Selection:** "Change Folder..." button to easily switch between folders (e.g. `C:\Users\Student\Downloads` or a dedicated test folder).
 - **On-Demand Organization:** "Organize Existing Files" button to clean up files already sitting in the folder.
 
 ---
 
-## 🛠️ Installation & Setup
+## Installation & Setup
 
 ### Prerequisites
 - Python 3.11+ (Tested and verified on Python 3.14 on Windows 11)
 
 ### 1. Clone / Navigate to Project
 ```bash
-cd SmartSort
+git clone https://github.com/anannyasalvi16/DropShelf.git
+cd DropShelf
 ```
 
 ### 2. Create and Activate Virtual Environment
@@ -50,40 +59,41 @@ pip install -r requirements.txt
 
 ---
 
-## 🖥️ How to Run the App
+## How to Run the App
 
 ```bash
 python main.py
 ```
 
 ### Quick Workflow
-1. The app launches idle showing your current `Downloads` folder path.
-2. Click **Start Watching** to begin monitoring.
-3. Save or drag any file into `Downloads`. Within ~2 seconds of download completion, it is sorted into its corresponding subfolder.
-4. Select any row in the activity log and click **Undo Selected Move** to reverse the move.
-5. Click **Manage Rules...** to add custom keyword rules on the fly.
-6. Click **Organize Existing Files** to sort all loose files currently in the directory.
+1. The app launches idle, displaying your default watched folder (e.g. `C:\Users\Student\Downloads`).
+2. *(Optional)* Click **Change Folder...** to select any other directory to watch.
+3. Click **Start Watching** to begin monitoring.
+4. Drop or download a sample file (e.g. `lecture_notes.pdf` into `C:\Users\Student\Downloads`). Within ~2 seconds of download completion, it is moved to `C:\Users\Student\Downloads\Documents\lecture_notes.pdf`.
+5. Select any completed move in the activity log and click **Undo Selected Move** to restore the file to its original location.
+6. Click **Manage Rules...** to add custom keyword rules on the fly.
+7. Click **Organize Existing Files** to sort all loose files currently in the directory.
 
 ---
 
-## 🧪 Running Automated Tests
+## Running Automated Tests
 
 Run the full pytest suite:
 ```bash
 pytest -v
 ```
-All tests use temporary folders (`tmp_path`) and never touch your real Downloads directory.
+All tests use isolated temporary folders (`tmp_path`) and never touch your real Downloads directory.
 
 ---
 
-## 🧠 Operating Systems Concepts Explained (Viva Reference)
+## Operating Systems Concepts Explained (Viva Reference)
 
 | OS Concept | How & Where It Appears in DropShelf |
 |---|---|
 | **File System Events & Notification** | Uses OS-level kernel hooks (`ReadDirectoryChangesW` on Windows, `inotify` on Linux, `FSEvents` on macOS) through `watchdog.Observer`. Avoids busy-waiting/polling. |
 | **I/O Polling vs Event-Driven** | Polling the folder every second would waste CPU cycles and battery. OS event notifications wake the application process only when a directory change occurs. |
 | **File Attributes & Metadata** | Queries inode/metadata (`os.stat`: `st_size`, `st_mtime_ns`) to detect active write streams and classify files. |
-| **File Locking & In-Use Detection** | On Windows, attempts opening the file in append mode (`open(path, 'ab')`). An active download raises `PermissionError` (`ERROR_SHARING_VIOLATION`), ensuring incomplete files are never moved. |
+| **File Locking & In-Use Detection** | On Windows, attempts opening the file in append mode (`open(path, 'ab')`) and tests rename permission (`os.rename(path, path)`). An active download raises `PermissionError` (`ERROR_SHARING_VIOLATION`), ensuring incomplete files are never moved. |
 | **Concurrency & Multithreading** | The application separates duties across threads: (1) Main UI Thread for Tkinter GUI, (2) Watchdog Observer thread, (3) Bounded `ThreadPoolExecutor` worker threads for file moves. |
 | **Race Conditions** | A browser writing a file concurrently with a mover attempting to sort it represents a classical race condition. Solved via consecutive metadata stability checks and file lock probing. |
 | **Thread Synchronization & Queues** | Tkinter widgets are not thread-safe and can only be modified from the main thread. Worker threads communicate with the UI via a thread-safe `queue.Queue` polled via `root.after(200, ...)`. |
@@ -91,7 +101,7 @@ All tests use temporary folders (`tmp_path`) and never touch your real Downloads
 
 ---
 
-## 🎓 Viva Questions & Answers
+## Viva Questions & Answers
 
 1. **Q: Which major OS concepts does this project demonstrate?**
    * **A:** Filesystem management, kernel event notification, process/thread concurrency, file locking/sharing modes, and race condition prevention.
@@ -104,7 +114,7 @@ All tests use temporary folders (`tmp_path`) and never touch your real Downloads
 
 ---
 
-## ⚠️ Known Limitations
+## Known Limitations
 
 1. **Same-Type Classification**: Files sharing an extension (e.g., college assignment PDFs vs bank statement PDFs) both route to `Documents` unless an explicit keyword rule is configured.
 2. **Substring Matching in Custom Rules**: Custom rules use case-insensitive substring checks. A rule for `"OS"` will match names containing those letters (e.g., `PHOTOS.jpg`, `BIOS.bin`).

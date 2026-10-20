@@ -214,3 +214,70 @@ def test_locked_file_exhausts_retries_and_leaves_file_untouched(tmp_path):
         finally:
             watcher.stop()
 
+
+def test_change_watched_folder_while_watching(tmp_path):
+    """
+    Assert that dynamically changing the watched folder while watching:
+    - Sorts new files created in the new watched folder.
+    - Leaves files created in the old folder untouched.
+    """
+    folder_a = tmp_path / "DownloadsA"
+    folder_a.mkdir()
+    folder_b = tmp_path / "DownloadsB"
+    folder_b.mkdir()
+
+    rules_file = tmp_path / "rules.json"
+    db_file = tmp_path / "test.db"
+
+    rules = get_default_rules()
+    rules["watch_folder"] = str(folder_a)
+    save_rules(rules, rules_file)
+
+    rules_mgr = ThreadSafeRulesManager(rules_file)
+    hist_mgr = HistoryManager(db_file)
+    event_q = queue.Queue()
+
+    watcher = FolderWatcher(
+        watch_folder=folder_a,
+        rules_manager=rules_mgr,
+        history_manager=hist_mgr,
+        event_queue=event_q,
+        stability_interval=0.05,
+        stability_checks=2,
+        stability_timeout=3.0,
+    )
+
+    watcher.start()
+    assert watcher.is_running
+    try:
+        time.sleep(0.3)
+
+        # Dynamically change the watched folder while watching is active
+        watcher.set_watch_folder(folder_b)
+        assert watcher.is_running
+        assert watcher.watch_folder == folder_b.resolve()
+        time.sleep(0.3)
+
+        # Place a new file in the new folder
+        new_file = folder_b / "sample_new.pdf"
+        new_file.write_text("new folder doc", encoding="utf-8")
+
+        # Place a file in the old folder
+        old_file = folder_a / "sample_old.pdf"
+        old_file.write_text("old folder doc", encoding="utf-8")
+
+        # The new folder's file must be sorted into folder_b/Documents
+        assert wait_until_condition(
+            lambda: (folder_b / "Documents" / "sample_new.pdf").exists(),
+            timeout=4.0,
+        )
+        assert not new_file.exists()
+
+        # The old folder's file must NOT be sorted and must remain untouched in folder_a
+        time.sleep(0.5)
+        assert old_file.exists()
+        assert not (folder_a / "Documents" / "sample_old.pdf").exists()
+    finally:
+        watcher.stop()
+
+

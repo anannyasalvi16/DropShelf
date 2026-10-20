@@ -9,6 +9,7 @@ venv/
 ENV/
 
 # Database files
+dropshelf.db
 *.db
 *.db-journal
 *.sqlite
